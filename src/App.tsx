@@ -2,13 +2,17 @@ import { useState, useEffect } from "react";
 import { socket } from "./socket";
 import JoinModal from "./components/joinModal";
 import SendMessage from "./components/sendMessage";
-import Message from "./components/message";
+import MultiMessages from "./components/multiMessages";
+
+interface messageType {
+  id: number;
+  name: string;
+  text: string;
+}
 
 function App() {
   const [chat, setChat] = useState(false);
-  const [messages, setMessages] = useState<
-    { id: number; name: string; text: string }[]
-  >([]);
+  const [messages, setMessages] = useState<messageType[]>([]);
 
   useEffect(() => {
     socket.on("warn", handleWarn);
@@ -20,17 +24,15 @@ function App() {
     };
   }, []);
 
-  const handleWarn = (uid: any, gid: any) => {
-    console.log("handleWarn -> ", uid);
+  const handleWarn = (data: any) => {
+    console.log("STH unexpected happened");
   };
 
-  const handleJoin = (uid: any, gid: any) => {
-    console.log("handleJoin -> ", uid);
+  const handleJoin = (data: any) => {
     setChat(true);
   };
 
-  const handleMessage = (data: any, gid: any) => {
-    console.log("handleMessage -> ", data);
+  const handleMessage = (data: any) => {
     setMessages((pre) => [
       ...pre,
       {
@@ -55,17 +57,7 @@ function App() {
       {chat && (
         <div>
           <div className="w-10/12 mx-auto h-[70vh] overflow-y-scroll">
-            <div className="inline-flex flex-col-reverse justify-center items-start  ">
-              {messages.map((message) => {
-                return (
-                  <Message
-                    key={message.id}
-                    name={message.name}
-                    text={message.text}
-                  />
-                );
-              })}
-            </div>
+            <MultiMessages messages={messages} />
           </div>
           <div>
             <SendMessage sendMessage={sendMessageHandler} />
