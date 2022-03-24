@@ -14,6 +14,7 @@ const SendMessage: React.FC<SendMessagePropsType> = (props) => {
 
   const onSendHandler = () => {
     props.sendMessage(message);
+    setMessage("");
   };
 
   return (
@@ -22,6 +23,7 @@ const SendMessage: React.FC<SendMessagePropsType> = (props) => {
         <div className="w-full flex flex-col justify-center items-center space-y-4">
           <textarea
             placeholder="Enter a message"
+            value={message}
             onChange={onMessageChange}
             className="w-full outline-none border-2 rounded focus:border-indigo-700 p-2"
           />

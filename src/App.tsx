@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   const handleWarn = (data: any) => {
-    console.log("STH unexpected happened");
+    console.log("STH unexpected happened", data);
   };
 
   const handleJoin = (data: any) => {
