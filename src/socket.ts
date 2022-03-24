@@ -1,3 +1,4 @@
 import io from "socket.io-client";
 
-export const socket = io("http://localhost:8000/chat");
+const socketAddress = process.env.REACT_APP_SOCKET as string;
+export const socket = io(socketAddress);
